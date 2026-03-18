@@ -34,7 +34,8 @@ export default function HomePage() {
         return
       }
 
-      posts = (data as { posts: Post }[]).map(row => row.posts)
+      const rows = (data ?? []) as unknown as { posts: Post }[]
+      posts = rows.map(row => row.posts).filter(Boolean)
     } else {
       const { data, error } = await supabase.from('posts').select('*')
       if (error) {
